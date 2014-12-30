@@ -1,0 +1,40 @@
+import "inspectable.idl";
+import "Windows.Foundation.idl";
+import "Windows.UI.idl";
+import "Windows.UI.Xaml.Data.idl";
+
+#define COMPONENT_VERSION 1.0
+
+namespace DataBinding
+{
+	runtimeclass Number;
+
+	[exclusiveto(Number)]
+	[uuid(29f9bd09-d452-49bf-99f9-59f328103cbd)]
+	[version(1.0)]
+	interface INumberFactory : IInspectable
+	{
+		[overload("CreateInstance")]HRESULT CreateInstance1([in] int value, [in] IInspectable* outer, [out] IInspectable** inner, [out, retval] Number** result);
+	}
+
+	[exclusiveto(Number)]
+	[uuid(5b197688-2f57-4d01-92cd-a888f10dcd90)]
+	[version(1.0)]
+	interface INumber : IInspectable
+	{
+		[propget]
+		HRESULT Value([out, retval] INT32* value);
+		[propput]
+		HRESULT Value([in] INT32 value);
+	}
+
+	[composable(DataBinding.INumberFactory, public, 1.0)]
+	[marshaling_behavior(agile)]
+	[threading(both)]
+	[version(1.0)]
+	runtimeclass Number
+	{
+		//interface Windows.UI.Xaml.Data.INotifyPropertyChanged;
+		[default] interface INumber;
+	}
+}
