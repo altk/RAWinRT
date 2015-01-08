@@ -4,9 +4,9 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Tue Dec 30 10:01:31 2014
+/* at Thu Jan 08 11:56:52 2015
  */
-/* Compiler settings for C:\Users\2C82~1\AppData\Local\Temp\DataBinding.idl-e82e1a7d:
+/* Compiler settings for C:\Users\2C82~1\AppData\Local\Temp\DataBinding.idl-b851929d:
     Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
@@ -91,6 +91,7 @@ namespace ABI {
 #include "Windows.Foundation.h"
 #include "Windows.UI.h"
 #include "Windows.UI.Xaml.Data.h"
+#include "Windows.UI.Xaml.CustomAttributes.h"
 
 #ifdef __cplusplus
 extern "C"{

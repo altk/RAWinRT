@@ -31,6 +31,13 @@ namespace TestCSharp
                                   new LocalNumber(8),
                               };
             lst.ItemsSource = items;
+            ChangeValue(items[5]);
+        }
+
+        async void ChangeValue(Number n)
+        {
+            await Task.Delay(1000);
+            n.Value = 100;
         }
 
         private class LocalNumber : Number

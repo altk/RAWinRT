@@ -21,16 +21,37 @@ using Microsoft::WRL::SimpleActivationFactory;
 using Microsoft::WRL::ComPtr;
 using Microsoft::WRL::Wrappers::HStringReference;
 
-class Number : public RuntimeClass < RuntimeClassFlags<RuntimeClassType::WinRt>, INumber >
+class Number : public RuntimeClass < RuntimeClassFlags<RuntimeClassType::WinRt>, INumber, INotifyPropertyChanged >
 {
 	InspectableClass(RuntimeClass_DataBinding_Number, BaseTrust);
 private:
 	INT32 _value;
 	ComPtr<INumber> _baseNumber;
+	EventSource<IPropertyChangedEventHandler> _notifyEventSource;
+	ComPtr<IPropertyChangedEventArgs> _valueChangedEventArgs;
 public:
+	void InitValueChangedEventArgs()
+	{
+		{
+			ComPtr<IPropertyChangedEventArgsFactory> propertyChangedEventArgsFactory;
+			RoGetActivationFactory(
+				HStringReference(RuntimeClass_Windows_UI_Xaml_Data_PropertyChangedEventArgs).Get(),
+				ABI::Windows::UI::Xaml::Data::IID_IPropertyChangedEventArgsFactory,
+				reinterpret_cast<void**>(propertyChangedEventArgsFactory.GetAddressOf()));
+
+			ComPtr<IInspectable> inner;
+			propertyChangedEventArgsFactory->CreateInstance(
+				HStringReference(L"Value").Get(),
+				nullptr,
+				reinterpret_cast<IInspectable**>(_valueChangedEventArgs.GetAddressOf()),
+				_valueChangedEventArgs.GetAddressOf());
+		}
+	}
 	Number(INT32 value)
 		: _value(value)
-	{	}
+	{
+		InitValueChangedEventArgs();
+	}
 
 	virtual HRESULT STDMETHODCALLTYPE get_Value(INT32* value) override
 	{
@@ -41,7 +62,18 @@ public:
 	virtual HRESULT STDMETHODCALLTYPE put_Value(INT32 value) override
 	{
 		_value = value;
+		_notifyEventSource.InvokeAll(reinterpret_cast<IInspectable*>(this), _valueChangedEventArgs.Get());
 		return S_OK;
+	}
+
+	virtual HRESULT STDMETHODCALLTYPE add_PropertyChanged(IPropertyChangedEventHandler* handler, EventRegistrationToken* token) override
+	{
+		return _notifyEventSource.Add(handler, token);
+	}
+
+	virtual HRESULT STDMETHODCALLTYPE remove_PropertyChanged(EventRegistrationToken token) override
+	{
+		return _notifyEventSource.Remove(token);
 	}
 };
 
@@ -52,7 +84,7 @@ class NumberFactory : public Microsoft::WRL::ActivationFactory < INumberFactory 
 public:
 	virtual HRESULT STDMETHODCALLTYPE CreateInstance1(INT32 value, IInspectable* outer, IInspectable** inner, INumber** result) override
 	{
-		*inner = Make<Number>(value).Detach();
+		*inner = reinterpret_cast<IInspectable*>(Make<Number>(value).Detach());
 		*result = reinterpret_cast<INumber*>(outer);
 		return S_OK;
 	}

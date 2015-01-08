@@ -135,6 +135,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,6 +160,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
@@ -176,6 +186,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -196,6 +211,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -217,6 +237,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -237,6 +262,11 @@
     </Link>
     <Midl>
       <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
+      <GenerateTypeLibrary>false</GenerateTypeLibrary>
+      <GenerateClientFiles>None</GenerateClientFiles>
+      <GenerateServerFiles>None</GenerateServerFiles>
+      <PrependWithABINamepsace>true</PrependWithABINamepsace>
+      <GenerateStublessProxies>false</GenerateStublessProxies>
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>

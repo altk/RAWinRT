@@ -2,6 +2,7 @@ import "inspectable.idl";
 import "Windows.Foundation.idl";
 import "Windows.UI.idl";
 import "Windows.UI.Xaml.Data.idl";
+import "Windows.UI.Xaml.CustomAttributes.idl";
 
 #define COMPONENT_VERSION 1.0
 
@@ -28,13 +29,14 @@ namespace DataBinding
 		HRESULT Value([in] INT32 value);
 	}
 
+	[bindable]
 	[composable(DataBinding.INumberFactory, public, 1.0)]
 	[marshaling_behavior(agile)]
 	[threading(both)]
 	[version(1.0)]
 	runtimeclass Number
 	{
-		//interface Windows.UI.Xaml.Data.INotifyPropertyChanged;
 		[default] interface INumber;
+		interface Windows.UI.Xaml.Data.INotifyPropertyChanged;
 	}
 }
