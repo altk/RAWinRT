@@ -29,6 +29,7 @@ namespace TestCSharp
                                   new LocalNumber(6),
                                   new LocalNumber(7),
                                   new LocalNumber(8),
+                                  new LocalNumber(),
                               };
             lst.ItemsSource = items;
             ChangeValue(items[5]);
@@ -36,12 +37,13 @@ namespace TestCSharp
 
         async void ChangeValue(Number n)
         {
-            await Task.Delay(1000);
+            await Task.Delay(3000);
             n.Value = 100;
         }
 
         private class LocalNumber : Number
         {
+            public LocalNumber() { }
             public LocalNumber(int value) : base(value) { }
         }
     }

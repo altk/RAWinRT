@@ -4,6 +4,7 @@
 #include "DataBinding_h.h"
 
 using ABI::DataBinding::INumber;
+using ABI::DataBinding::INumberOverrides;
 using ABI::DataBinding::INumberFactory;
 using ABI::Windows::UI::Xaml::Data::IPropertyChangedEventArgsFactory;
 using ABI::Windows::UI::Xaml::Data::INotifyPropertyChanged;
@@ -21,7 +22,7 @@ using Microsoft::WRL::SimpleActivationFactory;
 using Microsoft::WRL::ComPtr;
 using Microsoft::WRL::Wrappers::HStringReference;
 
-class Number : public RuntimeClass < RuntimeClassFlags<RuntimeClassType::WinRt>, INumber, INotifyPropertyChanged >
+class Number : public RuntimeClass < RuntimeClassFlags<RuntimeClassType::WinRt>, INumber, INumberOverrides, INotifyPropertyChanged >
 {
 	InspectableClass(RuntimeClass_DataBinding_Number, BaseTrust);
 private:
@@ -47,6 +48,12 @@ public:
 				_valueChangedEventArgs.GetAddressOf());
 		}
 	}
+	Number()
+		: _value(0)
+	{
+		InitValueChangedEventArgs();
+	}
+
 	Number(INT32 value)
 		: _value(value)
 	{
@@ -75,6 +82,12 @@ public:
 	{
 		return _notifyEventSource.Remove(token);
 	}
+
+	virtual HRESULT STDMETHODCALLTYPE GetValue(INT32* value)
+	{
+		*value = _value;
+		return S_OK;
+	}
 };
 
 class NumberFactory : public Microsoft::WRL::ActivationFactory < INumberFactory >
@@ -82,6 +95,13 @@ class NumberFactory : public Microsoft::WRL::ActivationFactory < INumberFactory 
 	InspectableClassStatic(RuntimeClass_DataBinding_Number, BaseTrust);
 
 public:
+	virtual HRESULT STDMETHODCALLTYPE CreateInstance0(IInspectable* outer, IInspectable** inner, INumber** result) override
+	{
+		*inner = reinterpret_cast<IInspectable*>(Make<Number>().Detach());
+		*result = reinterpret_cast<INumber*>(outer);
+		return S_OK;
+	}
+
 	virtual HRESULT STDMETHODCALLTYPE CreateInstance1(INT32 value, IInspectable* outer, IInspectable** inner, INumber** result) override
 	{
 		*inner = reinterpret_cast<IInspectable*>(Make<Number>(value).Detach());

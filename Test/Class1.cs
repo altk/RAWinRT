@@ -2,9 +2,18 @@
 
 namespace Test
 {
-    [Bindable]
-    public class Class1
+    public abstract class Class 
     {
         public int Value { get; set; }
+
+        public abstract int GetValue();
+    }
+
+    public class ClassDerived : Class
+    {
+        public override int GetValue()
+        {
+            return Value;
+        }
     }
 }
