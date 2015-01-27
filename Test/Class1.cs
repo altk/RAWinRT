@@ -2,18 +2,13 @@
 
 namespace Test
 {
-    public abstract class Class 
+    public class Class<T>
     {
-        public int Value { get; set; }
 
-        public abstract int GetValue();
+        public T Value { get; set; }
     }
 
-    public class ClassDerived : Class
+    public class Derived : Class<int>
     {
-        public override int GetValue()
-        {
-            return Value;
-        }
     }
 }

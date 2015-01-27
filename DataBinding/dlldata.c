@@ -20,11 +20,13 @@ extern "C"   {
 #endif
 
 EXTERN_PROXY_FILE( DataBinding )
+EXTERN_PROXY_FILE( Microsoft2EXaml2EInteractivity )
 
 
 PROXYFILE_LIST_START
 /* Start of list */
   REFERENCE_PROXY_FILE( DataBinding ),
+  REFERENCE_PROXY_FILE( Microsoft2EXaml2EInteractivity ),
 /* End of list */
 PROXYFILE_LIST_END
 

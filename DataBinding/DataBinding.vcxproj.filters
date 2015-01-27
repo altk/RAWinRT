@@ -12,5 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="DataBinding.idl" />
+    <Midl Include="Microsoft.Xaml.Interactivity.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DataBinding.def" />
   </ItemGroup>
 </Project>

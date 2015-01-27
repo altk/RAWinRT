@@ -1,28 +1,17 @@
 #include <wrl.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <wrl/event.h>
-#include "DataBinding_h.h"
+#include "DataBinding.h"
+#include "Microsoft.Xaml.Interactivity.h"
 
-using ABI::DataBinding::INumber;
-using ABI::DataBinding::INumberOverrides;
-using ABI::DataBinding::INumberFactory;
-using ABI::Windows::UI::Xaml::Data::IPropertyChangedEventArgsFactory;
-using ABI::Windows::UI::Xaml::Data::INotifyPropertyChanged;
-using ABI::Windows::UI::Xaml::Data::IPropertyChangedEventHandler;
-using ABI::Windows::UI::Xaml::Data::IPropertyChangedEventArgs;
-using ABI::Windows::UI::Xaml::Data::PropertyChangedEventArgs;
-using Microsoft::WRL::RuntimeClassFlags;
-using Microsoft::WRL::RuntimeClassType;
-using Microsoft::WRL::EventSource;
-using Microsoft::WRL::Make;
-using Microsoft::WRL::MakeAndInitialize;
-using Microsoft::WRL::RuntimeClass;
-using Microsoft::WRL::ActivationFactory;
-using Microsoft::WRL::SimpleActivationFactory;
-using Microsoft::WRL::ComPtr;
-using Microsoft::WRL::Wrappers::HStringReference;
+using namespace Microsoft::WRL::Wrappers;
+using namespace Microsoft::WRL;
+using namespace ABI::Windows::Foundation;
+using namespace ABI::Microsoft::Xaml::Interactivity;
+using namespace ABI::Windows::UI::Xaml::Data;
+using namespace ABI::DataBinding;
 
-class Number : public RuntimeClass < RuntimeClassFlags<RuntimeClassType::WinRt>, INumber, INumberOverrides, INotifyPropertyChanged >
+class NumberImpl : public RuntimeClass < RuntimeClassFlags<WinRt>, INumber, INumberOverrides, INotifyPropertyChanged >
 {
 	InspectableClass(RuntimeClass_DataBinding_Number, BaseTrust);
 private:
@@ -30,31 +19,28 @@ private:
 	ComPtr<INumber> _baseNumber;
 	EventSource<IPropertyChangedEventHandler> _notifyEventSource;
 	ComPtr<IPropertyChangedEventArgs> _valueChangedEventArgs;
-public:
 	void InitValueChangedEventArgs()
 	{
-		{
-			ComPtr<IPropertyChangedEventArgsFactory> propertyChangedEventArgsFactory;
-			RoGetActivationFactory(
-				HStringReference(RuntimeClass_Windows_UI_Xaml_Data_PropertyChangedEventArgs).Get(),
-				ABI::Windows::UI::Xaml::Data::IID_IPropertyChangedEventArgsFactory,
-				reinterpret_cast<void**>(propertyChangedEventArgsFactory.GetAddressOf()));
+		ComPtr<IPropertyChangedEventArgsFactory> propertyChangedEventArgsFactory;
+		RoGetActivationFactory(
+			HStringReference(RuntimeClass_Windows_UI_Xaml_Data_PropertyChangedEventArgs).Get(),
+			ABI::Windows::UI::Xaml::Data::IID_IPropertyChangedEventArgsFactory,
+			reinterpret_cast<void**>(propertyChangedEventArgsFactory.GetAddressOf()));
 
-			ComPtr<IInspectable> inner;
-			propertyChangedEventArgsFactory->CreateInstance(
-				HStringReference(L"Value").Get(),
-				nullptr,
-				reinterpret_cast<IInspectable**>(_valueChangedEventArgs.GetAddressOf()),
-				_valueChangedEventArgs.GetAddressOf());
-		}
+		propertyChangedEventArgsFactory->CreateInstance(
+			HStringReference(L"Value").Get(),
+			nullptr,
+			nullptr,
+			_valueChangedEventArgs.GetAddressOf());
 	}
-	Number()
+public:
+	NumberImpl()
 		: _value(0)
 	{
 		InitValueChangedEventArgs();
 	}
 
-	Number(INT32 value)
+	explicit NumberImpl(INT32 value)
 		: _value(value)
 	{
 		InitValueChangedEventArgs();
@@ -83,31 +69,89 @@ public:
 		return _notifyEventSource.Remove(token);
 	}
 
-	virtual HRESULT STDMETHODCALLTYPE GetValue(INT32* value)
+	virtual HRESULT STDMETHODCALLTYPE GetValue(INT32* value) override
 	{
 		*value = _value;
 		return S_OK;
 	}
 };
 
-class NumberFactory : public Microsoft::WRL::ActivationFactory < INumberFactory >
+class NumberFactory : public ActivationFactory < INumberFactory >
 {
 	InspectableClassStatic(RuntimeClass_DataBinding_Number, BaseTrust);
 
 public:
-	virtual HRESULT STDMETHODCALLTYPE CreateInstance0(IInspectable* outer, IInspectable** inner, INumber** result) override
+	virtual HRESULT STDMETHODCALLTYPE CreateInstance0(
+		IInspectable* outer,
+		IInspectable** inner,
+		INumber** result
+		) override
 	{
-		*inner = reinterpret_cast<IInspectable*>(Make<Number>().Detach());
-		*result = reinterpret_cast<INumber*>(outer);
+		INumber*  number = Make<NumberImpl>().Detach();
+		if (nullptr == outer || FAILED(outer->QueryInterface(ABI::DataBinding::IID_INumber, reinterpret_cast<void**>(result))))
+		{
+			*result = number;
+		}
+		else
+		{
+			*inner = number;
+		}
 		return S_OK;
 	}
 
-	virtual HRESULT STDMETHODCALLTYPE CreateInstance1(INT32 value, IInspectable* outer, IInspectable** inner, INumber** result) override
+	virtual HRESULT STDMETHODCALLTYPE CreateInstance1(
+		INT32 value,
+		IInspectable* outer,
+		IInspectable** inner,
+		INumber** result
+		) override
 	{
-		*inner = reinterpret_cast<IInspectable*>(Make<Number>(value).Detach());
-		*result = reinterpret_cast<INumber*>(outer);
+		INumber* number = Make<NumberImpl>(value).Detach();
+		if (nullptr == outer || FAILED(outer->QueryInterface(ABI::DataBinding::IID_INumber, reinterpret_cast<void**>(result))))
+		{
+			*result = number;
+		}
+		else
+		{
+			*inner = number;
+		}
 		return S_OK;
 	}
 };
 
-ActivatableClassWithFactory(Number, NumberFactory);
+class DependencyPropertyChangedHelperFactory : public ActivationFactory < IDependencyPropertyChangedHelperStatics >
+{
+	InspectableClassStatic(RuntimeClass_DataBinding_DependencyPropertyChangedHelper, BaseTrust);
+
+public:
+
+	STDMETHODIMP SubscribeToEvent(
+		ABI::Windows::UI::Xaml::IDependencyObject* sourceObject
+		)
+		override
+	{
+		HRESULT hr;
+		ComPtr<__IInteractionStatics> interaction;
+		{
+			hr = GetActivationFactory(HStringReference(RuntimeClass_Microsoft_Xaml_Interactivity_Interaction).Get(), interaction.GetAddressOf());
+			if (FAILED(hr))
+			{
+				return hr;
+			}
+		}
+
+		ComPtr<__IBehaviorCollectionPublicNonVirtuals> behaviorsCollection;
+		{
+			hr = interaction->GetBehaviors(sourceObject, behaviorsCollection.GetAddressOf());
+			if (FAILED(hr))
+			{
+				return hr;
+			}
+		}
+		return S_OK;
+	}
+};
+
+ActivatableClassWithFactory(NumberImpl, NumberFactory);
+
+ActivatableStaticOnlyFactory(DependencyPropertyChangedHelperFactory);

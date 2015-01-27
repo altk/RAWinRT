@@ -4,10 +4,10 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Sat Jan 10 12:54:04 2015
+/* at Tue Jan 27 15:56:50 2015
  */
-/* Compiler settings for C:\Users\2C82~1\AppData\Local\Temp\DataBinding.idl-a9104684:
-    Oicf, W1, Zp8, env=Win64 (32b run), target_arch=AMD64 8.00.0603 
+/* Compiler settings for C:\Users\v_dronov\AppData\Local\Temp\DataBinding.idl-3edd4ad4:
+    Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
     protocol : dce , ms_ext, c_ext, robust
     error checks: allocation ref bounds_check enum stub_data 
     VC __declspec() decoration level: 
@@ -24,6 +24,11 @@
 #define __REQUIRED_RPCNDR_H_VERSION__ 475
 #endif
 
+/* verify that the <rpcsal.h> version is high enough to compile this file*/
+#ifndef __REQUIRED_RPCSAL_H_VERSION__
+#define __REQUIRED_RPCSAL_H_VERSION__ 100
+#endif
+
 #include "rpc.h"
 #include "rpcndr.h"
 
@@ -36,8 +41,8 @@
 #include "ole2.h"
 #endif /*COM_NO_WINDOWS_H*/
 
-#ifndef __DataBinding_h_h__
-#define __DataBinding_h_h__
+#ifndef __DataBinding_h__
+#define __DataBinding_h__
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1020)
 #pragma once
@@ -102,6 +107,22 @@ namespace ABI {
 #endif 	/* ____x_ABI_CDataBinding_CINumberFactory_FWD_DEFINED__ */
 
 
+#ifndef ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_FWD_DEFINED__
+#define ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_FWD_DEFINED__
+typedef interface __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics;
+
+#ifdef __cplusplus
+namespace ABI {
+    namespace DataBinding {
+        interface IDependencyPropertyChangedHelperStatics;
+    } /* end namespace */
+} /* end namespace */
+
+#endif /* __cplusplus */
+
+#endif 	/* ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_FWD_DEFINED__ */
+
+
 /* header files for imported files */
 #include "inspectable.h"
 #include "Windows.Foundation.h"
@@ -117,6 +138,23 @@ extern "C"{
 /* interface __MIDL_itf_DataBinding_0000_0000 */
 /* [local] */ 
 
+#pragma warning(push)
+#pragma warning(disable:4001) 
+#pragma once
+#pragma warning(pop)
+#if defined(__cplusplus)
+}
+#endif // defined(__cplusplus)
+#include <Windows.Foundation.h>
+#if !defined(__windows2Eui2Examl_h__)
+#include <Windows.UI.Xaml.h>
+#endif // !defined(__windows2Eui2Examl_h__)
+#if !defined(__windows2Eui2Examl2Econtrols_h__)
+#include <Windows.UI.Xaml.Controls.h>
+#endif // !defined(__windows2Eui2Examl2Econtrols_h__)
+#if defined(__cplusplus)
+extern "C" {
+#endif // defined(__cplusplus)
 
 
 
@@ -127,6 +165,7 @@ class Number;
 } /*DataBinding*/
 }
 #endif
+
 #if !defined(____x_ABI_CDataBinding_CINumber_INTERFACE_DEFINED__)
 extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_DataBinding_INumber[] = L"DataBinding.INumber";
 #endif /* !defined(____x_ABI_CDataBinding_CINumber_INTERFACE_DEFINED__) */
@@ -134,6 +173,7 @@ extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_DataBin
 
 /* interface __MIDL_itf_DataBinding_0000_0000 */
 /* [local] */ 
+
 
 
 
@@ -167,7 +207,7 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumber;
             {
             public:
                 virtual /* [propget] */ HRESULT STDMETHODCALLTYPE get_Value( 
-                    /* [out][retval] */ INT32 *value) = 0;
+                    /* [out][retval] */ __RPC__out INT32 *value) = 0;
                 
                 virtual /* [propput] */ HRESULT STDMETHODCALLTYPE put_Value( 
                     /* [in] */ INT32 value) = 0;
@@ -188,36 +228,36 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumber;
         BEGIN_INTERFACE
         
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            __x_ABI_CDataBinding_CINumber * This,
-            /* [in] */ REFIID riid,
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
+            /* [in] */ __RPC__in REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            __x_ABI_CDataBinding_CINumber * This);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            __x_ABI_CDataBinding_CINumber * This);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This);
         
         HRESULT ( STDMETHODCALLTYPE *GetIids )( 
-            __x_ABI_CDataBinding_CINumber * This,
-            /* [out] */ ULONG *iidCount,
-            /* [size_is][size_is][out] */ IID **iids);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
+            /* [out] */ __RPC__out ULONG *iidCount,
+            /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID **iids);
         
         HRESULT ( STDMETHODCALLTYPE *GetRuntimeClassName )( 
-            __x_ABI_CDataBinding_CINumber * This,
-            /* [out] */ HSTRING *className);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
+            /* [out] */ __RPC__deref_out_opt HSTRING *className);
         
         HRESULT ( STDMETHODCALLTYPE *GetTrustLevel )( 
-            __x_ABI_CDataBinding_CINumber * This,
-            /* [out] */ TrustLevel *trustLevel);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
+            /* [out] */ __RPC__out TrustLevel *trustLevel);
         
         /* [propget] */ HRESULT ( STDMETHODCALLTYPE *get_Value )( 
-            __x_ABI_CDataBinding_CINumber * This,
-            /* [out][retval] */ INT32 *value);
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
+            /* [out][retval] */ __RPC__out INT32 *value);
         
         /* [propput] */ HRESULT ( STDMETHODCALLTYPE *put_Value )( 
-            __x_ABI_CDataBinding_CINumber * This,
+            __RPC__in __x_ABI_CDataBinding_CINumber * This,
             /* [in] */ INT32 value);
         
         END_INTERFACE
@@ -310,7 +350,7 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumberOverrides;
             {
             public:
                 virtual HRESULT STDMETHODCALLTYPE GetValue( 
-                    /* [out][retval] */ INT32 *value) = 0;
+                    /* [out][retval] */ __RPC__out INT32 *value) = 0;
                 
             };
 
@@ -328,33 +368,33 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumberOverrides;
         BEGIN_INTERFACE
         
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This,
-            /* [in] */ REFIID riid,
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This,
+            /* [in] */ __RPC__in REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This);
         
         HRESULT ( STDMETHODCALLTYPE *GetIids )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This,
-            /* [out] */ ULONG *iidCount,
-            /* [size_is][size_is][out] */ IID **iids);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This,
+            /* [out] */ __RPC__out ULONG *iidCount,
+            /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID **iids);
         
         HRESULT ( STDMETHODCALLTYPE *GetRuntimeClassName )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This,
-            /* [out] */ HSTRING *className);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This,
+            /* [out] */ __RPC__deref_out_opt HSTRING *className);
         
         HRESULT ( STDMETHODCALLTYPE *GetTrustLevel )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This,
-            /* [out] */ TrustLevel *trustLevel);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This,
+            /* [out] */ __RPC__out TrustLevel *trustLevel);
         
         HRESULT ( STDMETHODCALLTYPE *GetValue )( 
-            __x_ABI_CDataBinding_CINumberOverrides * This,
-            /* [out][retval] */ INT32 *value);
+            __RPC__in __x_ABI_CDataBinding_CINumberOverrides * This,
+            /* [out][retval] */ __RPC__out INT32 *value);
         
         END_INTERFACE
     } __x_ABI_CDataBinding_CINumberOverridesVtbl;
@@ -443,15 +483,15 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumberFactory;
             {
             public:
                 virtual HRESULT STDMETHODCALLTYPE CreateInstance0( 
-                    /* [in] */ IInspectable *outer,
-                    /* [out] */ IInspectable **inner,
-                    /* [out][retval] */ ABI::DataBinding::INumber **result) = 0;
+                    /* [in] */ __RPC__in_opt IInspectable *outer,
+                    /* [out] */ __RPC__deref_out_opt IInspectable **inner,
+                    /* [out][retval] */ __RPC__deref_out_opt ABI::DataBinding::INumber **result) = 0;
                 
                 virtual HRESULT STDMETHODCALLTYPE CreateInstance1( 
                     /* [in] */ int value,
-                    /* [in] */ IInspectable *outer,
-                    /* [out] */ IInspectable **inner,
-                    /* [out][retval] */ ABI::DataBinding::INumber **result) = 0;
+                    /* [in] */ __RPC__in_opt IInspectable *outer,
+                    /* [out] */ __RPC__deref_out_opt IInspectable **inner,
+                    /* [out][retval] */ __RPC__deref_out_opt ABI::DataBinding::INumber **result) = 0;
                 
             };
 
@@ -469,42 +509,42 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumberFactory;
         BEGIN_INTERFACE
         
         HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
-            /* [in] */ REFIID riid,
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
+            /* [in] */ __RPC__in REFIID riid,
             /* [annotation][iid_is][out] */ 
             _COM_Outptr_  void **ppvObject);
         
         ULONG ( STDMETHODCALLTYPE *AddRef )( 
-            __x_ABI_CDataBinding_CINumberFactory * This);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This);
         
         ULONG ( STDMETHODCALLTYPE *Release )( 
-            __x_ABI_CDataBinding_CINumberFactory * This);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This);
         
         HRESULT ( STDMETHODCALLTYPE *GetIids )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
-            /* [out] */ ULONG *iidCount,
-            /* [size_is][size_is][out] */ IID **iids);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
+            /* [out] */ __RPC__out ULONG *iidCount,
+            /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID **iids);
         
         HRESULT ( STDMETHODCALLTYPE *GetRuntimeClassName )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
-            /* [out] */ HSTRING *className);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
+            /* [out] */ __RPC__deref_out_opt HSTRING *className);
         
         HRESULT ( STDMETHODCALLTYPE *GetTrustLevel )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
-            /* [out] */ TrustLevel *trustLevel);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
+            /* [out] */ __RPC__out TrustLevel *trustLevel);
         
         HRESULT ( STDMETHODCALLTYPE *CreateInstance0 )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
-            /* [in] */ IInspectable *outer,
-            /* [out] */ IInspectable **inner,
-            /* [out][retval] */ __x_ABI_CDataBinding_CINumber **result);
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
+            /* [in] */ __RPC__in_opt IInspectable *outer,
+            /* [out] */ __RPC__deref_out_opt IInspectable **inner,
+            /* [out][retval] */ __RPC__deref_out_opt __x_ABI_CDataBinding_CINumber **result);
         
         HRESULT ( STDMETHODCALLTYPE *CreateInstance1 )( 
-            __x_ABI_CDataBinding_CINumberFactory * This,
+            __RPC__in __x_ABI_CDataBinding_CINumberFactory * This,
             /* [in] */ int value,
-            /* [in] */ IInspectable *outer,
-            /* [out] */ IInspectable **inner,
-            /* [out][retval] */ __x_ABI_CDataBinding_CINumber **result);
+            /* [in] */ __RPC__in_opt IInspectable *outer,
+            /* [out] */ __RPC__deref_out_opt IInspectable **inner,
+            /* [out][retval] */ __RPC__deref_out_opt __x_ABI_CDataBinding_CINumber **result);
         
         END_INTERFACE
     } __x_ABI_CDataBinding_CINumberFactoryVtbl;
@@ -563,6 +603,9 @@ EXTERN_C const IID IID___x_ABI_CDataBinding_CINumberFactory;
 #define RUNTIMECLASS_DataBinding_Number_DEFINED
 extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_DataBinding_Number[] = L"DataBinding.Number";
 #endif
+#if !defined(____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_INTERFACE_DEFINED__)
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_DataBinding_IDependencyPropertyChangedHelperStatics[] = L"DataBinding.IDependencyPropertyChangedHelperStatics";
+#endif /* !defined(____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_INTERFACE_DEFINED__) */
 
 
 /* interface __MIDL_itf_DataBinding_0000_0003 */
@@ -572,6 +615,140 @@ extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_DataBind
 
 extern RPC_IF_HANDLE __MIDL_itf_DataBinding_0000_0003_v0_0_c_ifspec;
 extern RPC_IF_HANDLE __MIDL_itf_DataBinding_0000_0003_v0_0_s_ifspec;
+
+#ifndef ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_INTERFACE_DEFINED__
+#define ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_INTERFACE_DEFINED__
+
+/* interface __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics */
+/* [uuid][object] */ 
+
+
+
+/* interface ABI::DataBinding::IDependencyPropertyChangedHelperStatics */
+/* [uuid][object] */ 
+
+
+EXTERN_C const IID IID___x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    } /* end extern "C" */
+    namespace ABI {
+        namespace DataBinding {
+            
+            MIDL_INTERFACE("2427f0e7-c4fa-4921-84f4-dfcab45f1776")
+            IDependencyPropertyChangedHelperStatics : public IInspectable
+            {
+            public:
+                virtual HRESULT STDMETHODCALLTYPE SubscribeToEvent( 
+                    /* [in] */ __RPC__in_opt ABI::Windows::UI::Xaml::IDependencyObject *sourceObject) = 0;
+                
+            };
+
+            extern const __declspec(selectany) IID & IID_IDependencyPropertyChangedHelperStatics = __uuidof(IDependencyPropertyChangedHelperStatics);
+
+            
+        }  /* end namespace */
+    }  /* end namespace */
+    extern "C" { 
+    
+#else 	/* C style interface */
+
+    typedef struct __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStaticsVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This,
+            /* [in] */ __RPC__in REFIID riid,
+            /* [annotation][iid_is][out] */ 
+            _COM_Outptr_  void **ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This);
+        
+        ULONG ( STDMETHODCALLTYPE *Release )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetIids )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This,
+            /* [out] */ __RPC__out ULONG *iidCount,
+            /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID **iids);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetRuntimeClassName )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This,
+            /* [out] */ __RPC__deref_out_opt HSTRING *className);
+        
+        HRESULT ( STDMETHODCALLTYPE *GetTrustLevel )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This,
+            /* [out] */ __RPC__out TrustLevel *trustLevel);
+        
+        HRESULT ( STDMETHODCALLTYPE *SubscribeToEvent )( 
+            __RPC__in __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics * This,
+            /* [in] */ __RPC__in_opt __x_ABI_CWindows_CUI_CXaml_CIDependencyObject *sourceObject);
+        
+        END_INTERFACE
+    } __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStaticsVtbl;
+
+    interface __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics
+    {
+        CONST_VTBL struct __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStaticsVtbl *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_QueryInterface(This,riid,ppvObject)	\
+    ( (This)->lpVtbl -> QueryInterface(This,riid,ppvObject) ) 
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_AddRef(This)	\
+    ( (This)->lpVtbl -> AddRef(This) ) 
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_Release(This)	\
+    ( (This)->lpVtbl -> Release(This) ) 
+
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_GetIids(This,iidCount,iids)	\
+    ( (This)->lpVtbl -> GetIids(This,iidCount,iids) ) 
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_GetRuntimeClassName(This,className)	\
+    ( (This)->lpVtbl -> GetRuntimeClassName(This,className) ) 
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_GetTrustLevel(This,trustLevel)	\
+    ( (This)->lpVtbl -> GetTrustLevel(This,trustLevel) ) 
+
+
+#define __x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_SubscribeToEvent(This,sourceObject)	\
+    ( (This)->lpVtbl -> SubscribeToEvent(This,sourceObject) ) 
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+
+#endif 	/* ____x_ABI_CDataBinding_CIDependencyPropertyChangedHelperStatics_INTERFACE_DEFINED__ */
+
+
+/* interface __MIDL_itf_DataBinding_0000_0004 */
+/* [local] */ 
+
+#ifndef RUNTIMECLASS_DataBinding_DependencyPropertyChangedHelper_DEFINED
+#define RUNTIMECLASS_DataBinding_DependencyPropertyChangedHelper_DEFINED
+extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_DataBinding_DependencyPropertyChangedHelper[] = L"DataBinding.DependencyPropertyChangedHelper";
+#endif
+
+
+/* interface __MIDL_itf_DataBinding_0000_0004 */
+/* [local] */ 
+
+
+
+extern RPC_IF_HANDLE __MIDL_itf_DataBinding_0000_0004_v0_0_c_ifspec;
+extern RPC_IF_HANDLE __MIDL_itf_DataBinding_0000_0004_v0_0_s_ifspec;
 
 /* Additional Prototypes for ALL interfaces */
 

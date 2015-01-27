@@ -1,25 +1,46 @@
+#include <sdkddkver.h>
 import "inspectable.idl";
 import "Windows.Foundation.idl";
 import "Windows.UI.idl";
 import "Windows.UI.Xaml.Data.idl";
 import "Windows.UI.Xaml.CustomAttributes.idl";
+// Additional imports to ensure that all required headers are included
+cpp_quote("#if defined(__cplusplus)")
+cpp_quote("}")
+cpp_quote("#endif // defined(__cplusplus)")
+cpp_quote("#include <Windows.Foundation.h>")
+cpp_quote("#if !defined(__windows2Eui2Examl_h__)")
+cpp_quote("#include <Windows.UI.Xaml.h>")
+cpp_quote("#endif // !defined(__windows2Eui2Examl_h__)")
+cpp_quote("#if !defined(__windows2Eui2Examl2Econtrols_h__)")
+cpp_quote("#include <Windows.UI.Xaml.Controls.h>")
+cpp_quote("#endif // !defined(__windows2Eui2Examl2Econtrols_h__)")
+cpp_quote("#if defined(__cplusplus)")
+cpp_quote("extern \"C\" {")
+cpp_quote("#endif // defined(__cplusplus)")
+
+#define VERSION 0x00000001
 
 namespace DataBinding
 {
 	interface INumber;
-	
+
 	interface INumberOverrides;
-	
+
 	interface INumberFactory;
-	
-	runtimeclass Number;	
+
+	runtimeclass Number;
+
+	interface IDependencyPropertyChangedHelperStatics;
+
+	runtimeclass DependencyPropertyChangedHelper;
 }
 
 namespace DataBinding
 {
 	[exclusiveto(Number)]
 	[uuid(5b197688-2f57-4d01-92cd-a888f10dcd90)]
-	[version(0x00000001)]
+	[version(VERSION)]
 	interface INumber : IInspectable
 	{
 		[propget]
@@ -30,7 +51,7 @@ namespace DataBinding
 
 	[exclusiveto(Number)]
 	[uuid(12b0eeee-76ed-47af-8247-610025184b58)]
-	[version(0x00000001)]
+	[version(VERSION)]
 	interface INumberOverrides : IInspectable
 	{
 		HRESULT GetValue([out, retval] INT32* value);
@@ -38,7 +59,7 @@ namespace DataBinding
 
 	[exclusiveto(Number)]
 	[uuid(29f9bd09-d452-49bf-99f9-59f328103cbd)]
-	[version(0x00000001)]
+	[version(VERSION)]
 	interface INumberFactory : IInspectable
 	{
 		[overload("CreateInstance")]HRESULT CreateInstance0([in] IInspectable* outer, [out] IInspectable** inner, [out, retval] Number** result);
@@ -49,11 +70,28 @@ namespace DataBinding
 	[composable(DataBinding.INumberFactory, public, 1.0)]
 	[marshaling_behavior(agile)]
 	[threading(both)]
-	[version(0x00000001)]
+	[version(VERSION)]
 	runtimeclass Number
 	{
 		[default] interface INumber;
-		[overridable][version(0x00000001)] interface INumberOverrides;
+		[overridable][version(VERSION)] interface INumberOverrides;
 		interface Windows.UI.Xaml.Data.INotifyPropertyChanged;
 	}
+
+	[exclusiveto(DependencyPropertyChangedHelper)]
+	[uuid(2427f0e7-c4fa-4921-84f4-dfcab45f1776)]
+	[version(VERSION)]
+	interface IDependencyPropertyChangedHelperStatics : IInspectable
+	{
+		HRESULT SubscribeToEvent(
+			[in] Windows.UI.Xaml.DependencyObject* sourceObject
+			);
+	};
+
+	[marshaling_behavior(agile)]
+	[static(IDependencyPropertyChangedHelperStatics, VERSION)]
+	[threading(both)]
+	[version(VERSION)]
+	runtimeclass DependencyPropertyChangedHelper
+	{};
 }

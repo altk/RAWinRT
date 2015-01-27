@@ -315,7 +315,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Midl Include="DataBinding.idl" />
-    <Midl Include="Microsoft.Xaml.Interactivity.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp" />
@@ -325,11 +324,7 @@
     <None Include="DataBinding.def" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKNative, Version=12.0">
-      <Private>true</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-    </SDKReference>
+    <SDKReference Include="BehaviorsXamlSDKNative, Version=12.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

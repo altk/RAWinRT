@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using DataBinding;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -18,33 +19,26 @@ namespace TestCSharp
         {
             InitializeComponent();
 
-            var items = new List<Number>
-                              {
-                                  new LocalNumber(0),
-                                  new LocalNumber(1),
-                                  new LocalNumber(2),
-                                  new LocalNumber(3),
-                                  new LocalNumber(4),
-                                  new LocalNumber(5),
-                                  new LocalNumber(6),
-                                  new LocalNumber(7),
-                                  new LocalNumber(8),
-                                  new LocalNumber(),
-                              };
-            lst.ItemsSource = items;
-            ChangeValue(items[5]);
+            DependencyPropertyChangedHelper.SubscribeToEvent(this);
+
+            var list = new List<Number>();
+            for (var i = 0; i < 10000; i++)
+            {
+                list.Add(new Number(i));
+            }
+
+            SetItems(list);
         }
 
-        async void ChangeValue(Number n)
+        async void SetItems(List<Number> list)
         {
-            await Task.Delay(3000);
-            n.Value = 100;
-        }
-
-        private class LocalNumber : Number
-        {
-            public LocalNumber() { }
-            public LocalNumber(int value) : base(value) { }
+            await Task.Delay(1000);
+            var textblocks = new VariableSizedWrapGrid();
+            foreach (var number in list)
+            {
+                textblocks.Children.Add(new TextBlock { Text = number.Value.ToString() });
+            }
+            Content = textblocks;
         }
     }
 }
