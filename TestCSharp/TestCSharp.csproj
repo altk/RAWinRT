@@ -141,9 +141,9 @@
     <None Include="TestCSharp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataBinding\DataBinding.vcxproj">
-      <Project>{06072469-0941-4ca5-9002-3f18660bf64a}</Project>
-      <Name>DataBinding</Name>
+    <ProjectReference Include="..\TestComponentWRL\TestComponentWRL.vcxproj">
+      <Project>{07a05612-2795-43b3-9839-aefc35c9b534}</Project>
+      <Name>TestComponentWRL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

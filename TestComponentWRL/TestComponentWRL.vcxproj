@@ -26,11 +26,21 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <Midl Include="TestComponentWRL.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="TestComponentWRL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestComponentWRL.def" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{06072469-0941-4ca5-9002-3f18660bf64a}</ProjectGuid>
+    <ProjectGuid>{07a05612-2795-43b3-9839-aefc35c9b534}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>DataBinding</ProjectName>
-    <RootNamespace>DataBinding</RootNamespace>
+    <ProjectName>TestComponentWRL</ProjectName>
+    <RootNamespace>TestComponentWRL</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -98,7 +108,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
-    <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -107,7 +116,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
-    <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -116,218 +124,135 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
-    <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
       <PreprocessorDefinitions>_WINRT_DLL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <GenerateClientFiles>
-      </GenerateClientFiles>
-      <GenerateServerFiles>
-      </GenerateServerFiles>
-      <GenerateStublessProxies>
-      </GenerateStublessProxies>
       <HeaderFileName>%(Filename).h</HeaderFileName>
-      <AdditionalOptions>/sal </AdditionalOptions>
     </Midl>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
-      <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_WINRT_DLL;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
-      <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <Midl>
-      <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
-      <GenerateTypeLibrary>false</GenerateTypeLibrary>
-      <GenerateClientFiles>None</GenerateClientFiles>
-      <GenerateServerFiles>None</GenerateServerFiles>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-      <GenerateStublessProxies>false</GenerateStublessProxies>
-    </Midl>
-    <CustomBuildStep>
-      <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm'">
-    <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <CompileAsManaged>false</CompileAsManaged>
-      <PreprocessorDefinitions>_WINRT_DLL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
-      <AssemblyDebug>true</AssemblyDebug>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <AdditionalMetadataDirectories>$(TargetPlatformWinMDLocation);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
-      <GenerateTypeLibrary>true</GenerateTypeLibrary>
-      <GenerateClientFiles>
-      </GenerateClientFiles>
-      <GenerateServerFiles>
-      </GenerateServerFiles>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-      <GenerateStublessProxies>
-      </GenerateStublessProxies>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>_WINRT_DLL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
       <CompileAsManaged>false</CompileAsManaged>
-      <PreprocessorDefinitions>_WINRT_DLL;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
-      <GenerateTypeLibrary>false</GenerateTypeLibrary>
-      <GenerateClientFiles>None</GenerateClientFiles>
-      <GenerateServerFiles>None</GenerateServerFiles>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-      <GenerateStublessProxies>false</GenerateStublessProxies>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
+      <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_WINRT_DLL;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
+    </Link>
+    <Midl>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+    </Midl>
     <CustomBuildStep>
+      <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
       <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
-      <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_WINRT_DLL;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <IgnoreAllDefaultLibraries>
-      </IgnoreAllDefaultLibraries>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
-      <AssemblyDebug>true</AssemblyDebug>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <AdditionalMetadataDirectories>$(TargetPlatformWinMDLocation);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
-      <GenerateTypeLibrary>true</GenerateTypeLibrary>
-      <GenerateClientFiles>
-      </GenerateClientFiles>
-      <GenerateServerFiles>
-      </GenerateServerFiles>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-      <GenerateStublessProxies>
-      </GenerateStublessProxies>
       <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
-      <CompileAsManaged>false</CompileAsManaged>
       <PreprocessorDefinitions>_WINRT_DLL;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>MaxSpeed</Optimization>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>DataBinding.def</ModuleDefinitionFile>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>TestComponentWRL.def</ModuleDefinitionFile>
     </Link>
     <Midl>
-      <AdditionalMetadataDirectories>$(WindowsSDK_MetadataPath)</AdditionalMetadataDirectories>
-      <GenerateTypeLibrary>false</GenerateTypeLibrary>
-      <GenerateClientFiles>None</GenerateClientFiles>
-      <GenerateServerFiles>None</GenerateServerFiles>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-      <GenerateStublessProxies>false</GenerateStublessProxies>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
     </Midl>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
       <Outputs>$(OutDir)%(TargetName).winmd</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <Midl Include="DataBinding.idl" />
-    <Midl Include="Microsoft.Xaml.Interactivity.idl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Module.cpp" />
-    <ClCompile Include="Number.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DataBinding.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKNative, Version=12.0">
-      <Private>true</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-    </SDKReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
