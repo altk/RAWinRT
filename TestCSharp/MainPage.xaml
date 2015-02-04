@@ -7,16 +7,12 @@
     <ItemsControl x:Name="Lst">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapGrid ItemHeight="15"
-                          ItemWidth="30" />
+                <WrapGrid />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <TextBlock Width="30"
-                           Height="15"
-                           Text="{Binding Str,
-                                          Mode=OneTime}" />
+                <TextBlock Text="{Binding Str, Mode=OneTime}" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
