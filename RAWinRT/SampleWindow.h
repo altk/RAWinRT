@@ -64,22 +64,31 @@ public:
 		return S_OK;
 	}
 
-	auto __stdcall AddRef()  -> ULONG { return 2; }
+	auto __stdcall AddRef()  -> ULONG  override
+	{
+		return 2;
+	}
 
-	auto __stdcall Release() -> ULONG { return 1; }
+	auto __stdcall Release() -> ULONG  override
+	{
+		return 1;
+	}
 
 	auto __stdcall GetIids(ULONG *,
 		IID **) -> HRESULT
+		override
 	{
 		return E_NOTIMPL;
 	}
 
 	auto __stdcall GetRuntimeClassName(HSTRING *) -> HRESULT
+		override
 	{
 		return E_NOTIMPL;
 	}
 
 	auto __stdcall GetTrustLevel(TrustLevel *) -> HRESULT
+		override
 	{
 		return E_NOTIMPL;
 	}
@@ -171,10 +180,9 @@ public:
 
 	void Draw()
 	{
-		wchar_t const text[] = L"съешь ещЄ этих м€гких французских булок";
-
-		auto clearColor = ::dxdoth::Color(1.0f, 1.0f, 1.0f);
-		auto brushColor = ::dxdoth::Color(0.0f, 0.0f, 0.0f, 0.5f);
+		wchar_t buffer[5];
+		auto brushColor = ::dxdoth::Color(1.0f, 1.0f, 1.0f);
+		auto clearColor = ::dxdoth::Color(0.0f, 0.0f, 0.0f);
 
 		m_target.SetAntialiasMode(::dxdoth::Direct2D::AntialiasMode::PerPrimitive);
 		m_target.SetTextAntialiasMode(::dxdoth::Direct2D::TextAntialiasMode::ClearType);
@@ -182,21 +190,24 @@ public:
 		auto brush = m_target.CreateSolidColorBrush(brushColor);
 		auto factory = ::dxdoth::DirectWrite::CreateFactory();
 		auto fonts = factory.GetSystemFontCollection();
-		auto textFormat = factory.CreateTextFormat(L"Segoe UI", ::dxdoth::DirectWrite::FontWeight::Bold, ::dxdoth::DirectWrite::FontStyle::Normal, ::dxdoth::DirectWrite::FontStretch::Normal, 40.0f);
+		auto textFormat = factory.CreateTextFormat(L"Segoe UI", ::dxdoth::DirectWrite::FontWeight::Normal, ::dxdoth::DirectWrite::FontStyle::Normal, ::dxdoth::DirectWrite::FontStretch::Normal, 11.0f);
 
 		m_target.Clear(clearColor);
-		
-		m_target.SetTextAntialiasMode(::dxdoth::Direct2D::TextAntialiasMode::Aliased);
-		m_target.DrawText(text, _countof(text) - 1, textFormat, ::dxdoth::RectF(10.0f, 0, 1250.0f, 40), brush);
 
-		m_target.SetTextAntialiasMode(::dxdoth::Direct2D::TextAntialiasMode::Grayscale);
-		m_target.DrawText(text, _countof(text) - 1, textFormat, ::dxdoth::RectF(10.0f, 50, 1250.0f, 90), brush);
+		auto targetSize = m_target->GetSize();
 
-		m_target.SetTextAntialiasMode(::dxdoth::Direct2D::TextAntialiasMode::ClearType);
-		m_target.DrawText(text, _countof(text) - 1, textFormat, ::dxdoth::RectF(10.0f, 100, 1250.0f, 150), brush);
-
-		/*
-		*/
+		for (size_t k = 0; k < 100; k++)
+		{
+			auto counter = 0;
+			for (float i = 0.0f; i < targetSize.width; i += 30.0f)
+			{
+				for (float j = 0; j < targetSize.height; j += 15.0f)
+				{
+					_itow_s(counter++, buffer, 10);
+					m_target.DrawText(buffer, wcsnlen_s(buffer, _countof(buffer)), textFormat, ::dxdoth::RectF(i, j, 30.0f + i, 15.0f + j), brush);
+				}
+			}
+		}
 
 		brush.Reset();
 		factory.Reset();
@@ -205,6 +216,7 @@ public:
 	}
 
 	auto __stdcall Run() -> HRESULT
+		override
 	{
 		::Microsoft::WRL::ComPtr<::ABI::Windows::UI::Core::ICoreDispatcher> dispatcher;
 		::dxdoth::HR(m_window->get_Dispatcher(dispatcher.GetAddressOf()));
@@ -253,6 +265,7 @@ public:
 	}
 
 	auto __stdcall Uninitialize() -> HRESULT
+		override
 	{
 		return S_OK;
 	}

@@ -5,20 +5,7 @@
       xmlns:local="using:TestCX"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
-    <ItemsControl x:Name="Lst" >
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <WrapGrid ItemHeight="15"
-                          ItemWidth="30" />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <!--<ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <TextBlock Width="30"
-                           Height="15"
-                           Text="{Binding Str,
-                                          Mode=OneTime}" />
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>-->
-    </ItemsControl>
+    <Canvas x:Name="Lst"
+            Width="1920"
+            Height="1080"/>
 </Page>
