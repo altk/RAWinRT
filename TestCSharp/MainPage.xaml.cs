@@ -23,8 +23,7 @@ namespace TestCSharp
 
         private async void SetItems()
         {
-            var items = await Task.Run(() => Enumerable.Range(0, 10000).Select(i => new TestClass(i)).ToList());
-            await Task.Delay(1000);
+            var items = await Task.Run(() => Enumerable.Range(0, 4500).Select(i => new TestClass(i)).ToList());
             Lst.ItemsSource = items;
         }
     }
