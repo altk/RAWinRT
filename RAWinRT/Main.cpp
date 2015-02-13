@@ -23,10 +23,10 @@ int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	LPCTSTR pBuf;
 
 	hMapFile = CreateFileMappingFromApp(
-		INVALID_HANDLE_VALUE,    // use paging file
-		nullptr,                    // default security
-		PAGE_READWRITE,          // read/write access
-		BUF_SIZE,                       // maximum object size (high-order DWORD)
+		INVALID_HANDLE_VALUE,    
+		nullptr,                 
+		PAGE_READWRITE,          
+		BUF_SIZE,                
 		szName);          
 
 	if (hMapFile == nullptr)
