@@ -196,7 +196,7 @@ public:
 
 		auto targetSize = m_target->GetSize();
 
-		for (size_t k = 0; k < 100; k++)
+		//for (size_t k = 0; k < 1; k++)
 		{
 			auto counter = 0;
 			for (float i = 0.0f; i < targetSize.width; i += 30.0f)
