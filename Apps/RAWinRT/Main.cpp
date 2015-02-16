@@ -1,8 +1,12 @@
 #include "pch.h"
-#include "dx.h"
 #include "memoryapi.h"
 #include "SampleWindow.h"
+#include <wrl.h>
+#include <wrl\client.h>
+#include <wrl\wrappers\corewrappers.h>
 #include <Windows.ApplicationModel.Core.h>
+#include <Windows.ApplicationModel.background.h>
+#include <windows.foundation.collections.h>
 #pragma comment(lib, "RuntimeObject.lib")
 
 #define BUF_SIZE 256
@@ -12,47 +16,115 @@ TCHAR szMsg[] = TEXT("Message from first process.");
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 {
 	using namespace Microsoft::WRL;
+	using namespace Microsoft::WRL::Wrappers;
+	using namespace Windows::Foundation;
 	using namespace ABI::Windows::ApplicationModel::Core;
-	
+	using namespace ABI::Windows::ApplicationModel::Background;
+	using namespace ABI::Windows::Foundation::Collections;
+
 	RoInitialize(RO_INIT_MULTITHREADED);
-	
-	auto app = ::dxdoth::GetActivationFactory<ICoreApplication>(
-		RuntimeClass_Windows_ApplicationModel_Core_CoreApplication);
 
-	HANDLE hMapFile;
-	LPCTSTR pBuf;
+	ComPtr<ICoreApplication> coreApplication;
+	GetActivationFactory(
+		HStringReference(RuntimeClass_Windows_ApplicationModel_Core_CoreApplication).Get(),
+		&coreApplication
+		);
 
-	hMapFile = CreateFileMappingFromApp(
-		INVALID_HANDLE_VALUE,    
-		nullptr,                 
-		PAGE_READWRITE,          
-		BUF_SIZE,                
-		szName);          
+	ComPtr<IBackgroundTaskRegistrationStatics> backgroundTaskRegistrationStatics;
+	GetActivationFactory(
+		HStringReference(RuntimeClass_Windows_ApplicationModel_Background_BackgroundTaskRegistration).Get(),
+		&backgroundTaskRegistrationStatics
+		);
 
-	if (hMapFile == nullptr)
+	ComPtr<IMapView<GUID, IBackgroundTaskRegistration*>> registrations;
+	backgroundTaskRegistrationStatics->get_AllTasks(
+		registrations.GetAddressOf()
+		);
+
+	ComPtr<__FIIterable_1___FIKeyValuePair_2_GUID_Windows__CApplicationModel__CBackground__CIBackgroundTaskRegistration_t> iterable;
+	registrations.As(&iterable);
+
+	ComPtr<__FIIterator_1___FIKeyValuePair_2_GUID_Windows__CApplicationModel__CBackground__CIBackgroundTaskRegistration_t> iterator;
+	iterable->First(&iterator);
+
+	boolean hasCurrent;
+	iterator->get_HasCurrent(&hasCurrent);
+	ComPtr<__FIKeyValuePair_2_GUID_Windows__CApplicationModel__CBackground__CIBackgroundTaskRegistration_t> current;
+	ComPtr<IBackgroundTaskRegistration> value;
+	while (hasCurrent)
 	{
-		return 1;
+		iterator->get_Current(current.GetAddressOf());
+		current->get_Value(&value);
+		value->Unregister(true);
+		iterator->MoveNext(&hasCurrent);
 	}
 
-	pBuf = static_cast<LPTSTR>(MapViewOfFileFromApp(
-		hMapFile,  
-		FILE_MAP_ALL_ACCESS, 
+	ComPtr<ISystemTriggerFactory> systemTriggerFactory;
+	GetActivationFactory(
+		HStringReference(RuntimeClass_Windows_ApplicationModel_Background_SystemTrigger).Get(),
+		&systemTriggerFactory
+		);
+
+	ComPtr<ISystemTrigger> systemTrigger;
+	systemTriggerFactory->Create(
+		SystemTriggerType::SystemTriggerType_TimeZoneChange,
+		true,
+		systemTrigger.GetAddressOf()
+		);
+
+	ComPtr<IBackgroundTaskBuilder> backgroundTaskBuilder;
+	ActivateInstance(
+		HStringReference(RuntimeClass_Windows_ApplicationModel_Background_BackgroundTaskBuilder).Get(),
+		&backgroundTaskBuilder
+		);
+
+	ComPtr<IBackgroundTrigger> backgroundTrigger;
+	systemTrigger.As<IBackgroundTrigger>(
+		&backgroundTrigger
+		);
+
+	backgroundTaskBuilder->put_Name(HStringReference(L"TestTask").Get());
+	backgroundTaskBuilder->put_TaskEntryPoint(HStringReference(L"RAWinRT.BT.TestTask").Get());
+	backgroundTaskBuilder->SetTrigger(backgroundTrigger.Get());
+
+	ComPtr<IBackgroundTaskRegistration> taskRegistration;
+	backgroundTaskBuilder->Register(taskRegistration.GetAddressOf());
+
+	SampleWindow window;
+	coreApplication->Run(&window);
+	/*
+		HANDLE hMapFile;
+		LPCTSTR pBuf;
+
+		hMapFile = CreateFileMappingFromApp(
+		INVALID_HANDLE_VALUE,
+		nullptr,
+		PAGE_READWRITE,
+		BUF_SIZE,
+		szName);
+
+		if (hMapFile == nullptr)
+		{
+		return 1;
+		}
+
+		pBuf = static_cast<LPTSTR>(MapViewOfFileFromApp(
+		hMapFile,
+		FILE_MAP_ALL_ACCESS,
 		0,
 		BUF_SIZE));
 
-	if (pBuf==nullptr)
-	{
+		if (pBuf==nullptr)
+		{
 		return 1;
-	}
+		}
 
-	auto size = _countof(szMsg)*sizeof(TCHAR);
+		auto size = _countof(szMsg)*sizeof(TCHAR);
 
-	CopyMemory((PVOID)pBuf, szMsg, size);
+		CopyMemory((PVOID)pBuf, szMsg, size);
 
-	SampleWindow window;
-	::dxdoth::HR(app->Run(&window));
 
-	UnmapViewOfFile(pBuf);
+		UnmapViewOfFile(pBuf);
 
-	CloseHandle(hMapFile);
+		CloseHandle(hMapFile);*/
 }

@@ -1,0 +1,37 @@
+import "inspectable.idl";
+import "Windows.ApplicationModel.background.idl";
+
+#define VERSION 0x00000001
+
+namespace RAWinRT
+{
+	namespace BT
+	{
+		//interface ITestTask;
+		runtimeclass TestTask;
+	}
+}
+
+namespace RAWinRT
+	{
+		namespace BT
+		{
+			/*[exclusiveto(TestTask)]
+			[version(VERSION)]
+			[uuid(6679c409-2fbf-479c-aa82-6d9f16dee2c5)]
+			interface ITestTask : IInspectable
+			{
+
+			};
+*/
+			[activatable(VERSION)]
+			[marshaling_behavior(agile)]
+			[threading(both)]
+			[version(VERSION)]
+			runtimeclass TestTask
+			{
+				[default]
+				interface Windows.ApplicationModel.Background.IBackgroundTask;
+			};
+		}
+	}

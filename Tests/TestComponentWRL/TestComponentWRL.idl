@@ -42,5 +42,5 @@ namespace TestComponentWRL
 	{
 		[default]
 		interface ITestClass;
-	}
+	};
 }
