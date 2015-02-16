@@ -1,0 +1,7 @@
+<XamlCompilerSaveState>
+  <ReferenceAssemblyList>
+    <LocalAssembly PathName="d:\github\rawinrt\release\testcx\testcx.winmd" HashGuid="105b5eb0-891d-81e3-eb4a-5239bd1a248b" />
+    <ReferenceAssembly PathName="c:\program files (x86)\microsoft sdks\windows\v8.1\extensionsdks\microsoft.vclibs\12.0\references\commonconfiguration\neutral\platform.winmd" HashGuid="58b6b6d1-928e-9908-9804-eb460e5e101b" />
+    <ReferenceAssembly PathName="d:\github\rawinrt\release\testcomponentwrl\testcomponentwrl.winmd" HashGuid="7b0dbecc-dcfa-3a9c-1c45-e5065ae708ca" />
+  </ReferenceAssemblyList>
+</XamlCompilerSaveState>

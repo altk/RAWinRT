@@ -1,0 +1,2 @@
+D:\GitHub\RAWinRT\TestComponentWRL\TestComponentWRL.vcxproj;x86
+D:\GitHub\RAWinRT\TestCX\TestCX.vcxproj;x86

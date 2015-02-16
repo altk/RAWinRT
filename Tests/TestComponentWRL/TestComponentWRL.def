@@ -1,0 +1,5 @@
+LIBRARY TestComponentWRL.dll
+
+EXPORTS
+    DllCanUnloadNow         PRIVATE
+    DllGetActivationFactory PRIVATE

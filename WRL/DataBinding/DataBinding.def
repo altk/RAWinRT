@@ -1,0 +1,5 @@
+LIBRARY DataBinding.dll
+
+EXPORTS
+    DllCanUnloadNow         PRIVATE
+    DllGetActivationFactory PRIVATE
