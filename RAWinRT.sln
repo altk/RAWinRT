@@ -23,7 +23,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCX", "Tests\TestCX\Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DataBinding", "WRL\DataBinding\DataBinding.vcxproj", "{06072469-0941-4CA5-9002-3F18660BF64A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAWinRT.BT", "Apps\RAWinRT.BT\RAWinRT.BT.vcxproj", "{D942F95B-032A-4533-AA3B-6CD1D8E2F0FE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAWinRT.WRL.TestTask", "Apps\RAWinRT.BT\RAWinRT.BT.vcxproj", "{D942F95B-032A-4533-AA3B-6CD1D8E2F0FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

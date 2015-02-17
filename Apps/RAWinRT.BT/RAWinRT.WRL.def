@@ -1,0 +1,4 @@
+LIBRARY RAWinRT.WRL
+EXPORTS
+    DllCanUnloadNow         PRIVATE
+    DllGetActivationFactory PRIVATE

@@ -29,8 +29,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{d942f95b-032a-4533-aa3b-6cd1d8e2f0fe}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>RAWinRT.BT</ProjectName>
-    <RootNamespace>RAWinRT.BT</RootNamespace>
+    <ProjectName>RAWinRT.WRL</ProjectName>
+    <RootNamespace>RAWinRT.WRL</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -128,6 +128,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -149,6 +150,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -170,6 +172,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -191,6 +194,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -212,6 +216,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -233,6 +238,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>runtimeobject.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>RAWinRT.WRL.def</ModuleDefinitionFile>
     </Link>
     <CustomBuildStep>
       <Command>mdmerge -partial -i "$(OutDir)." -o "$(OutDir)Output" -metadata_dir "$(WindowsSDK_MetadataPath)" &amp;&amp; copy /y "$(OutDir)Output\*" "$(OutDir)"</Command>
@@ -258,7 +264,10 @@
     <ClCompile Include="TestTask.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="RAWinRT.BT.idl" />
+    <Midl Include="RAWinRT.WRL.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RAWinRT.WRL.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

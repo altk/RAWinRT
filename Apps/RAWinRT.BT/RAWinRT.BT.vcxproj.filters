@@ -9,6 +9,9 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="RAWinRT.BT.idl" />
+    <Midl Include="RAWinRT.WRL.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RAWinRT.WRL.def" />
   </ItemGroup>
 </Project>

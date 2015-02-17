@@ -19,7 +19,12 @@
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="RAWinRT.BT.TestTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="RAWinRT.WRL.TestTask">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="RAWinRT.CX.TestTask">
           <BackgroundTasks>
             <Task Type="systemEvent" />
           </BackgroundTasks>

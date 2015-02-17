@@ -1,9 +1,6 @@
 #include "pch.h"
-#include "memoryapi.h"
 #include "SampleWindow.h"
-#include <wrl.h>
-#include <wrl\client.h>
-#include <wrl\wrappers\corewrappers.h>
+#include "RAWinRT.WRL.h"
 #include <Windows.ApplicationModel.Core.h>
 #include <Windows.ApplicationModel.background.h>
 #include <windows.foundation.collections.h>
@@ -15,9 +12,10 @@ TCHAR szMsg[] = TEXT("Message from first process.");
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 {
-	using namespace Microsoft::WRL;
 	using namespace Microsoft::WRL::Wrappers;
+	using namespace Microsoft::WRL;
 	using namespace Windows::Foundation;
+	using namespace ABI::RAWinRT::WRL;
 	using namespace ABI::Windows::ApplicationModel::Core;
 	using namespace ABI::Windows::ApplicationModel::Background;
 	using namespace ABI::Windows::Foundation::Collections;
@@ -67,7 +65,7 @@ int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 
 	ComPtr<ISystemTrigger> systemTrigger;
 	systemTriggerFactory->Create(
-		SystemTriggerType::SystemTriggerType_TimeZoneChange,
+		SystemTriggerType_TimeZoneChange,
 		true,
 		systemTrigger.GetAddressOf()
 		);
@@ -83,48 +81,19 @@ int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 		&backgroundTrigger
 		);
 
-	backgroundTaskBuilder->put_Name(HStringReference(L"TestTask").Get());
-	backgroundTaskBuilder->put_TaskEntryPoint(HStringReference(L"RAWinRT.BT.TestTask").Get());
+	backgroundTaskBuilder->put_Name(HStringReference(L"WRL.TestTask").Get());
+	backgroundTaskBuilder->put_TaskEntryPoint(HStringReference(L"RAWinRT.WRL.TestTask").Get());
 	backgroundTaskBuilder->SetTrigger(backgroundTrigger.Get());
 
 	ComPtr<IBackgroundTaskRegistration> taskRegistration;
 	backgroundTaskBuilder->Register(taskRegistration.GetAddressOf());
 
+	ComPtr<ITestTask> testTask;
+	auto hr = ActivateInstance(
+		HStringReference(RuntimeClass_RAWinRT_WRL_TestTask).Get(),
+		&testTask
+		);
+
 	SampleWindow window;
 	coreApplication->Run(&window);
-	/*
-		HANDLE hMapFile;
-		LPCTSTR pBuf;
-
-		hMapFile = CreateFileMappingFromApp(
-		INVALID_HANDLE_VALUE,
-		nullptr,
-		PAGE_READWRITE,
-		BUF_SIZE,
-		szName);
-
-		if (hMapFile == nullptr)
-		{
-		return 1;
-		}
-
-		pBuf = static_cast<LPTSTR>(MapViewOfFileFromApp(
-		hMapFile,
-		FILE_MAP_ALL_ACCESS,
-		0,
-		BUF_SIZE));
-
-		if (pBuf==nullptr)
-		{
-		return 1;
-		}
-
-		auto size = _countof(szMsg)*sizeof(TCHAR);
-
-		CopyMemory((PVOID)pBuf, szMsg, size);
-
-
-		UnmapViewOfFile(pBuf);
-
-		CloseHandle(hMapFile);*/
 }
