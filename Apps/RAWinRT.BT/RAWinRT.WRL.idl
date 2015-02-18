@@ -6,7 +6,6 @@ import "Windows.ApplicationModel.background.idl";
 namespace RAWinRT
 {
 	namespace WRL
-
 	{
 		interface ITestTask;
 		runtimeclass TestTask;
@@ -17,14 +16,6 @@ namespace RAWinRT
 	{
 		namespace WRL
 		{
-			[exclusiveto(TestTask)]
-			[uuid(048d938b-b235-432e-9092-20d703fe0b68)]
-			[version(VERSION)]
-			interface ITestTask : IInspectable
-			{
-
-			};
-
 			[activatable(VERSION)]
 			[marshaling_behavior(agile)]
 			[threading(both)]
@@ -32,8 +23,6 @@ namespace RAWinRT
 			runtimeclass TestTask
 			{
 				[default]
-				interface ITestTask;
-
 				interface Windows.ApplicationModel.Background.IBackgroundTask;
 			};
 		}

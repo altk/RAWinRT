@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "memoryapi.h"
 #include "SampleWindow.h"
 #include "RAWinRT.WRL.h"
 #include <Windows.ApplicationModel.Core.h>
@@ -7,7 +8,7 @@
 #pragma comment(lib, "RuntimeObject.lib")
 
 #define BUF_SIZE 256
-TCHAR szName[] = TEXT("Global\\MyFileMappingObject");
+TCHAR szName[] = TEXT("Local\\MyFileMappingObject");
 TCHAR szMsg[] = TEXT("Message from first process.");
 
 int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
@@ -88,12 +89,32 @@ int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR, int)
 	ComPtr<IBackgroundTaskRegistration> taskRegistration;
 	backgroundTaskBuilder->Register(taskRegistration.GetAddressOf());
 
-	ComPtr<ITestTask> testTask;
+	ComPtr<IBackgroundTask> testTask;
 	auto hr = ActivateInstance(
 		HStringReference(RuntimeClass_RAWinRT_WRL_TestTask).Get(),
 		&testTask
 		);
 
+	auto hMapFile = CreateFileMappingFromApp(
+		INVALID_HANDLE_VALUE,
+		nullptr,
+		PAGE_READWRITE,
+		BUF_SIZE,
+		szName);
+
+	auto pBuf = static_cast<LPTSTR>(MapViewOfFileFromApp(
+		hMapFile,
+		FILE_MAP_ALL_ACCESS,
+		0,
+		BUF_SIZE
+		));
+
+	CopyMemory((PVOID)pBuf, szMsg, _countof(szMsg)*sizeof(TCHAR));
+
+	UnmapViewOfFile(pBuf);
+
 	SampleWindow window;
 	coreApplication->Run(&window);
+
+	CloseHandle(hMapFile);
 }
